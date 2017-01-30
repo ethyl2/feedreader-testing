@@ -85,7 +85,7 @@ $(function() {
        * the use of Jasmine's beforeEach and asynchronous done() function.
        */
       beforeEach(function(done) {
-        loadFeed(function() {
+        loadFeed(0, function() {
           done();
         });
       });
@@ -95,6 +95,9 @@ $(function() {
         var $feed = document.getElementsByClassName('feed')[0];
         var $entries = document.getElementsByClassName('entry');
         expect($entries.length).toBeGreaterThan(0);
+        expect($feed.contains($entries[0])).toBe(true);
+        //console.log($feed.contains($entries[0]));
+        done();
       });
 
     }); // end test suite 'Initial Entries'
