@@ -78,10 +78,10 @@ $(function() {
     /* A new test suite named 'Initial Entries': */
     describe('Initial Entries', function() {
 
-      /* TODO: Write a test that ensures when the loadFeed
+      /* A test that ensures when the loadFeed
        * function is called and completes its work, there is at least
        * a single .entry element within the .feed container.
-       * Remember, loadFeed() is asynchronous so this test will require
+       * Since loadFeed() is asynchronous, this test requires
        * the use of Jasmine's beforeEach and asynchronous done() function.
        */
       beforeEach(function(done) {
@@ -99,14 +99,35 @@ $(function() {
         //console.log($feed.contains($entries[0]));
         done();
       });
-
     }); // end test suite 'Initial Entries'
 
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+    /* A new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+      /* A test that ensures when a new feed is loaded
+       * by the loadFeed function that the content actually changes.
+       */
+
+      var content0; //original content of 1st entry with allFeeds[0]
+      var $entries = document.getElementsByClassName('entry');
+
+      beforeEach(function(done) {
+        content0 = $entries[0].textContent;
+        loadFeed(1, function() {
+          done();
+        });
+      });
+
+      it('has content which changes when a new feed' +
+        ' is loaded by loadFeed()', function(done) {
+        expect($entries).toBeDefined();
+        expect(content0).toBeDefined();
+        var content1 = $entries[0].textContent; //new content of 1st entry with allFeeds[1]
+        expect(content1).toBeDefined();
+        expect(content0).not.toMatch(content1);
+        done();
+      });
+    }); // end test suite New Feed Selection
+
 }());
