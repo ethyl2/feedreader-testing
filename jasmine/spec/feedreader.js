@@ -57,6 +57,7 @@ $(function() {
        */
 
      it('has menu element hidden by default by having class menu-hidden', function() {
+       expect($menu).toBeDefined();
        expect($menu.classList).toContain('menu-hidden');
      });
 
@@ -68,6 +69,7 @@ $(function() {
 
       it('changes visibility by displaying once clicked and hiding once clicked again', function() {
         $hamburger = document.getElementsByTagName('i')[0];
+        expect($hamburger).toBeDefined();
         $hamburger.click();
         expect($menu.classList).not.toContain('menu-hidden');
         $hamburger.click();
@@ -94,9 +96,10 @@ $(function() {
         ' once the loadFeed function is called and completes its work', function(done) {
         var $feed = document.getElementsByClassName('feed')[0];
         var $entries = document.getElementsByClassName('entry');
+        expect($feed).toBeDefined();
+        expect($entries).toBeDefined();
         expect($entries.length).toBeGreaterThan(0);
         expect($feed.contains($entries[0])).toBe(true);
-        //console.log($feed.contains($entries[0]));
         done();
       });
     }); // end test suite 'Initial Entries'
