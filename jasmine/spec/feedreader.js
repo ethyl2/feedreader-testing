@@ -133,4 +133,49 @@ $(function() {
       });
     }); // end test suite New Feed Selection
 
+    /* Here's my new test suites for future features for
+     * this feedreader:
+     */
+
+    describe('New Feed Additions', function() {
+      /* A test to see whether new feeds can be added to the current selection
+       * of feeds. Helpful once DOM elements are added (input, submit button)
+       * for adding feeds.
+       */
+
+      it('can be added to the allFeeds array', function() {
+        expect(allFeeds).toBeDefined();
+        expect(allFeeds.length).not.toBe(0);
+        var oldNumFeeds = allFeeds.length;
+        var newFeedName = 'Slashdot';
+        var newFeedUrl = 'http://rss.slashdot.org/Slashdot/slashdot';
+
+        allFeeds[oldNumFeeds] = {
+          name: newFeedName,
+          url: newFeedUrl
+          }
+        expect(allFeeds.length).toBe(oldNumFeeds + 1);
+        expect(allFeeds.slice(-1)[0].name).toBe(newFeedName);
+        expect(allFeeds.slice(-1)[0].url).toBe(newFeedUrl);
+      });
+    }); // end of New Feed Additions test suite
+
+    describe('Deleting Feeds', function() {
+      /* A test to see whether feeds can be deleted from the current selection
+       * of feeds. Helpful once DOM elements are added (edit-mode button, checkboxes?)
+       * for deleting feeds.
+       */
+
+      it('is possible by removing a feed from the allFeeds array', function() {
+        expect(allFeeds).toBeDefined();
+        expect(allFeeds.length).not.toBe(0);
+        var oldNumFeeds = allFeeds.length;
+        var indexToRemove = 2;
+
+        allFeeds.splice(indexToRemove, 1);
+        expect(allFeeds.length).toBe(oldNumFeeds - 1);
+
+      });
+    });
+
 }());
