@@ -176,6 +176,36 @@ $(function() {
         expect(allFeeds.length).toBe(oldNumFeeds - 1);
 
       });
+    }); // end of Deleting Feeds test suite
+
+    describe('Entries', function() {
+      /* A test to see whether entries can be reordered. Helpful once DOM elements
+       * are added (edit-mode button, drop-down menu of ways to reorder the entries?)
+       */
+
+      it('can have their order reversed', function() {
+        $entries = document.getElementsByClassName('entry');
+        expect($entries.length).toBeGreaterThan(0);
+        var firstEntry = $entries[0];
+        var tempArray = new Array;
+        for (var i = $entries.length - 1; i >= 0; i--) {
+          tempArray.push($entries[i]);
+        }
+        // testing that the tempArray really has the entries in reverse order
+        for (var i = 0; i < $entries.length; i++) {
+          expect($entries[i]).toEqual(tempArray[tempArray.length - 1]);
+        }
+        $entries = tempArray;
+        // To display the entries in their new order:
+        var container = $('.feed');
+        container.empty();
+        $entries.forEach(function(entry) {
+            container.append(entry);
+          });
+
+        // testing that tempArray really became the new values for $entries
+        expect(firstEntry).toEqual($entries[$entries.length - 1]);
+        });
     });
 
 }());
