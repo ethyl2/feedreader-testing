@@ -1,7 +1,7 @@
 /* feedreader.js
  *
- * This is the spec file that Jasmine will read and contains
- * all of the tests that will be run against your application.
+ * This is the spec file that Jasmine reads and contains
+ * all of the tests that will be run against the application.
  */
 
 /* We're placing all of our tests within the $() function,
@@ -181,10 +181,11 @@ $(function() {
     describe('Entries', function() {
       /* A test to see whether entries can be reordered. Helpful once DOM elements
        * are added (edit-mode button, drop-down menu of ways to reorder the entries?)
+       * and a corresponding function in js/app.js
        */
 
       it('can have their order reversed', function() {
-        $entries = document.getElementsByClassName('entry');
+        var $entries = document.getElementsByClassName('entry');
         expect($entries.length).toBeGreaterThan(0);
         var firstEntry = $entries[0];
         var tempArray = new Array;
@@ -197,6 +198,7 @@ $(function() {
         }
         $entries = tempArray;
         // To display the entries in their new order:
+
         var container = $('.feed');
         container.empty();
         $entries.forEach(function(entry) {
@@ -205,6 +207,19 @@ $(function() {
 
         // testing that tempArray really became the new values for $entries
         expect(firstEntry).toEqual($entries[$entries.length - 1]);
+        });
+
+        it('can be deleted', function() {
+          var $entries = document.getElementsByClassName('entry');
+          expect($entries.length).toBeGreaterThan(0);
+          var oldNumEntries = $entries.length;
+          console.log(oldNumEntries);
+          var indexToRemove = 0;
+          if ($entries[indexToRemove]) {
+            $entries[indexToRemove].parentNode.removeChild($entries[indexToRemove]);
+          }
+          console.log($entries.length);
+          expect($entries.length).toEqual(oldNumEntries - 1);
         });
     });
 
