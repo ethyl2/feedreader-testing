@@ -105,7 +105,7 @@ $(function() {
     }); // end test suite 'Initial Entries'
 
 
-    /* A new test suite named "New Feed Selection" */
+    /* A new test suite named 'New Feed Selection' */
     describe('New Feed Selection', function() {
 
       /* A test that ensures when a new feed is loaded
@@ -202,7 +202,7 @@ $(function() {
         var indexNotFavorite = 0;
         // Apply background color -- alternatively could be done by adding a class:
         $entries[indexToFavorite].style.backgroundColor = 'rgba(243, 243, 57, 0.2)';
-        expect($entries[indexToFavorite].style.backgroundColor).not.toEqual($entries[indexNotFavorite]);
+        expect($entries[indexToFavorite].style.backgroundColor).not.toEqual($entries[indexNotFavorite].style.backgroundColor);
       });
 
       it('can have their order reversed', function() {
