@@ -214,12 +214,12 @@ $(function() {
         var $container = $('.feed');
         var $entries = $container.children();
         expect($entries.length).toBeGreaterThan(0);
+
         var oldFirstEntry = $entries[0];
         var oldLastEntry = $entries[$entries.length - 1];
-        console.log(oldFirstEntry);
+
         $entries = $entries.get().reverse();
         var newFirstEntry = $entries[0];
-        console.log(newFirstEntry);
         var newLastEntry = $entries[$entries.length - 1];
 
         // To display the entries in their new order:
@@ -232,5 +232,36 @@ $(function() {
         expect(oldFirstEntry.textContent).not.toEqual(newFirstEntry.textContent);
         expect(oldLastEntry.textContent).not.toEqual(newLastEntry.textContent);
         });
-      });
+
+      it('can have their titles translated into another language', function() {
+        /* A test to see whether entries' titles can be translated to another language.
+         * Helpful once DOM elements are added (translate button, checkboxes for
+         * the user to show which ones to translate)
+         * and a corresponding function in js/app.js
+         */
+
+        var $container = $('.feed');
+        var $entries = $container.children();
+        expect($entries.length).toBeGreaterThan(0);
+        var firstEntry = $entries[0]; //For this example, the entry title I want to translate
+        var firstEntryText = firstEntry.textContent;
+        var oldFirstEntryText = firstEntryText;
+        var newFirstEntryText;
+        var languages = 'en-es'; //For this example, English to Spanish
+
+        var translationUrl = 'https://translate.yandex.net/api/v1.5/tr.json/' +
+        'translate?key=trnsl.1.1.20170208T050757Z.3178e56b73c7d5ef.9647cf12c00202e6e3a6d7e1527b9093309b9ff2' +
+        '&text='+ firstEntryText + '&lang=' + languages + '&plain';
+
+        $.getJSON(translationUrl, function (data) {
+          newFirstEntryText = data.text[0];
+          firstEntry.innerHTML = '<article class = "entry"><h2>' + newFirstEntryText + '</h2></article>';
+          $container.after('<a style="font-size:150%" href="http://translate.yandex.com/" target="_blank">Powered by Yandex.Translate</a>');
+          }).fail(function() {
+            console.log('Translation is not available');
+          });
+          expect(oldFirstEntryText).not.toEqual(newFirstEntryText);
+        });
+
+      }); // end of Entries test suite
 }());
