@@ -179,48 +179,58 @@ $(function() {
     }); // end of Deleting Feeds test suite
 
     describe('Entries', function() {
-      /* A test to see whether entries can be reordered. Helpful once DOM elements
-       * are added (edit-mode button, drop-down menu of ways to reorder the entries?)
-       * and a corresponding function in js/app.js
-       */
 
-      it('can have their order reversed', function() {
+      it('can be deleted', function() {
+        /* A test to see whether entries can be deleted. Helpful once DOM elements
+         * are added (edit-mode button, checkboxes?)
+         * and a corresponding function in js/app.js
+         */
+        var $entries = document.getElementsByClassName('entry-link');
+        expect($entries.length).toBeGreaterThan(0);
+        var oldNumEntries = $entries.length;
+        var indexToRemove = 0;
+        if ($entries[indexToRemove]) {
+          $entries[indexToRemove].parentNode.removeChild($entries[indexToRemove]);
+        }
+        expect($entries.length).toEqual(oldNumEntries - 1);
+      });
+
+      it('can be marked as favorites by changing the background color', function() {
         var $entries = document.getElementsByClassName('entry');
         expect($entries.length).toBeGreaterThan(0);
-        var firstEntry = $entries[0];
-        var tempArray = new Array;
-        for (var i = $entries.length - 1; i >= 0; i--) {
-          tempArray.push($entries[i]);
-        }
-        // testing that the tempArray really has the entries in reverse order
-        for (var i = 0; i < $entries.length; i++) {
-          expect($entries[i]).toEqual(tempArray[tempArray.length - 1]);
-        }
-        $entries = tempArray;
+        var indexToFavorite = 2;
+        var indexNotFavorite = 0;
+        // Apply background color -- alternatively could be done by adding a class:
+        $entries[indexToFavorite].style.backgroundColor = 'rgba(243, 243, 57, 0.2)';
+        expect($entries[indexToFavorite].style.backgroundColor).not.toEqual($entries[indexNotFavorite]);
+      });
+
+      it('can have their order reversed', function() {
+        /* A test to see whether entries can be reordered. Helpful once DOM elements
+         * are added (edit-mode button, drop-down menu of ways to reorder the entries?)
+         * and a corresponding function in js/app.js
+         */
+
+        var $container = $('.feed');
+        var $entries = $container.children();
+        expect($entries.length).toBeGreaterThan(0);
+        var oldFirstEntry = $entries[0];
+        var oldLastEntry = $entries[$entries.length - 1];
+        console.log(oldFirstEntry);
+        $entries = $entries.get().reverse();
+        var newFirstEntry = $entries[0];
+        console.log(newFirstEntry);
+        var newLastEntry = $entries[$entries.length - 1];
+
         // To display the entries in their new order:
+        $container.empty();
+        $container.append($entries);
 
-        var container = $('.feed');
-        container.empty();
-        $entries.forEach(function(entry) {
-            container.append(entry);
-          });
-
-        // testing that tempArray really became the new values for $entries
-        expect(firstEntry).toEqual($entries[$entries.length - 1]);
+        // Testing to make sure that the order is reversed
+        expect(oldFirstEntry.textContent).toEqual(newLastEntry.textContent);
+        expect(oldLastEntry.textContent).toEqual(newFirstEntry.textContent);
+        expect(oldFirstEntry.textContent).not.toEqual(newFirstEntry.textContent);
+        expect(oldLastEntry.textContent).not.toEqual(newLastEntry.textContent);
         });
-
-        it('can be deleted', function() {
-          var $entries = document.getElementsByClassName('entry');
-          expect($entries.length).toBeGreaterThan(0);
-          var oldNumEntries = $entries.length;
-          console.log(oldNumEntries);
-          var indexToRemove = 0;
-          if ($entries[indexToRemove]) {
-            $entries[indexToRemove].parentNode.removeChild($entries[indexToRemove]);
-          }
-          console.log($entries.length);
-          expect($entries.length).toEqual(oldNumEntries - 1);
-        });
-    });
-
+      });
 }());
