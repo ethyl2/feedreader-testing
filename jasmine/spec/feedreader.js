@@ -30,10 +30,10 @@ $(function() {
        */
 
       it('have defined URLs which are not empty', function() {
-        for (var i=0; i < allFeeds.length; i++) {
-          expect(allFeeds[i].url).toBeDefined();
-          expect(allFeeds[i].url.length).toBeGreaterThan(0);
-        }
+        allFeeds.forEach(function(feed) {
+          expect(feed.url).toBeDefined();
+          expect(feed.url.length).toBeGreaterThan(0);
+        });
       });
 
       /* A test that loops through each feed
@@ -42,23 +42,23 @@ $(function() {
        */
 
       it('have defined names which are not empty', function() {
-        for (var i=0; i < allFeeds.length; i++) {
-          expect(allFeeds[i].name).toBeDefined();
-          expect(allFeeds[i].name.length).toBeGreaterThan(0);
-        }
+        allFeeds.forEach(function(feed) {
+          expect(feed.name).toBeDefined();
+          expect(feed.name.length).toBeGreaterThan(0);
+        });
       });
     }); // end test suite 'RSS feeds'
 
     /* A new test suite named "The menu" */
     describe('The menu', function() {
-      var $menu = document.getElementsByTagName('body')[0];
+      var $menu = $('body');
       /* A test that ensures the menu element is
        * hidden by default.
        */
 
      it('has menu element hidden by default by having class menu-hidden', function() {
        expect($menu).toBeDefined();
-       expect($menu.classList).toContain('menu-hidden');
+       expect($menu.hasClass('menu-hidden').toBeTruthy);
      });
 
      /* A test that ensures the menu changes
@@ -71,9 +71,9 @@ $(function() {
         $hamburger = document.getElementsByTagName('i')[0];
         expect($hamburger).toBeDefined();
         $hamburger.click();
-        expect($menu.classList).not.toContain('menu-hidden');
+        expect($menu.hasClass('menu-hidden').toBeFalsy);
         $hamburger.click();
-        expect($menu.classList).toContain('menu-hidden');
+        expect($menu.hasClass('menu-hidden').toBeTruthy);
       });
     }); // end test suite 'The menu'
 
