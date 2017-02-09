@@ -91,14 +91,13 @@ $(function() {
       });
 
       it('consist of at least a single .entry element within the .feed container' +
-        ' once the loadFeed function is called and completes its work', function(done) {
+        ' once the loadFeed function is called and completes its work', function() {
         var $feed = document.getElementsByClassName('feed')[0];
         var $entries = document.getElementsByClassName('entry');
         expect($feed).toBeDefined();
         expect($entries).toBeDefined();
         expect($entries.length).toBeGreaterThan(0);
         expect($feed.contains($entries[0])).toBe(true);
-        done();
       });
     }); // end test suite 'Initial Entries'
 
