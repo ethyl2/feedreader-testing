@@ -113,9 +113,9 @@ $(function() {
       var $entries = document.getElementsByClassName('entry');
 
       beforeEach(function(done) {
-        content0 = $entries[0].textContent;
-        loadFeed(1, function() {
-          done();
+        loadFeed(0, function() {
+          content0 = $entries[0].textContent;
+          loadFeed(1, done);
         });
       });
 
