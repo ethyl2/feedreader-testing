@@ -87,9 +87,7 @@ $(function() {
        * the use of Jasmine's beforeEach and asynchronous done() function.
        */
       beforeEach(function(done) {
-        loadFeed(0, function() {
-          done();
-        });
+        loadFeed(0, done);
       });
 
       it('consist of at least a single .entry element within the .feed container' +
